@@ -3,83 +3,244 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CausalFunnel Analytics Demo</title>
+  <title>CausalFunnel - Demo App</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #09090b;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.5);
+      --accent: #8b5cf6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-      background: #f9fafb;
-      color: #111827;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
     }
-    h1 {
-      color: #2563eb;
+
+    /* Ambient Background Glow */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      width: 50vw;
+      height: 50vw;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.15;
+      pointer-events: none;
     }
-    .container {
-      background: white;
+    body::before {
+      top: -10%;
+      left: -10%;
+      background: var(--primary);
+    }
+    body::after {
+      bottom: -10%;
+      right: -10%;
+      background: var(--accent);
+    }
+
+    header {
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      text-align: center;
       margin-bottom: 2rem;
+      border-bottom: 1px solid var(--surface-border);
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
     }
-    button {
-      background: #3b82f6;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(59, 130, 246, 0.1);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    button.btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: bold;
-      transition: background 0.2s;
+      box-shadow: 0 4px 15px var(--primary-glow);
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
     }
-    button:hover {
-      background: #2563eb;
+
+    button.btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px var(--primary-glow);
     }
+
+    button.btn-primary:active {
+      transform: translateY(1px);
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
       margin-top: 2rem;
     }
+
     .box {
-      height: 100px;
-      background: #e5e7eb;
-      border-radius: 8px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
     }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .box:hover::before {
+      transform: translateX(100%);
+    }
+
     .box:hover {
-      background: #d1d5db;
+      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 0 15px var(--primary-glow);
     }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
   </style>
   <script src="tracking.js"></script>
 </head>
 <body>
-  <h1>Analytics Demo Page</h1>
-  
-  <div class="container">
-    <h2>Welcome to the CausalFunnel Analytics Test</h2>
-    <p>This page automatically tracked a <strong>page_view</strong> event when you loaded it.</p>
-    <p>Try clicking around on different elements to generate <strong>click</strong> events. The tracker will capture the X and Y coordinates of your clicks.</p>
-    
-    <button onclick="alert('Button clicked!')">Click Me!</button>
-  </div>
 
-  <div class="container">
-    <h2>Interactive Grid</h2>
-    <p>Click inside these boxes to test spatial tracking for the heatmap.</p>
-    <div class="grid">
-      <div class="box">Box 1</div>
-      <div class="box">Box 2</div>
-      <div class="box">Box 3</div>
-      <div class="box">Box 4</div>
-      <div class="box">Box 5</div>
-      <div class="box">Box 6</div>
+  <header>
+    <h1>CausalFunnel Analytics</h1>
+    <p class="subtitle">Live Interaction Tracking Demonstration</p>
+  </header>
+  
+  <main>
+    <div class="card">
+      <h2>Interactive Tracking Console</h2>
+      <p>This page automatically tracked a <strong style="color: #4ade80;">Page View</strong> event the moment it loaded. Try clicking the buttons below to generate <strong style="color: #c084fc;">Interaction Events</strong>. Our tracking script captures exactly what you click and pushes it to the Dashboard in real-time.</p>
+      
+      <div class="actions">
+        <button class="btn-primary" onclick="alert('Checkout Process Initiated!')">Start Checkout Flow</button>
+        <button class="btn-secondary">Learn More</button>
+        <button class="btn-secondary">Subscribe</button>
+      </div>
     </div>
-  </div>
+
+    <div class="card">
+      <h2>Spatial Interaction Grid</h2>
+      <p>Click inside these interactive UI elements. The analytics engine will track exactly which components are driving the highest engagement, populating your Analytics Leaderboard.</p>
+      <div class="grid">
+        <div class="box">Feature Card 1</div>
+        <div class="box">Feature Card 2</div>
+        <div class="box">Feature Card 3</div>
+        <div class="box">Pricing Tier Basic</div>
+        <div class="box">Pricing Tier Pro</div>
+        <div class="box">Pricing Tier Max</div>
+      </div>
+    </div>
+  </main>
+
 </body>
 </html>

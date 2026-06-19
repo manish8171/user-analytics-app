@@ -1,0 +1,23 @@
+# Project Requirements
+
+This is a JavaScript/Node.js project. Instead of Python's pip `requirements.txt`, the dependencies are managed by `package.json` files in the `backend/` and `frontend/` directories.
+
+## System Dependencies
+- Node.js (v18 or higher)
+- npm (Node Package Manager)
+- MongoDB (running locally or via cloud connection string)
+
+## Backend Dependencies
+(automatically installed via `npm install` inside the `/backend` folder)
+- express
+- mongoose
+- cors
+- dotenv
+
+## Frontend Dependencies
+(automatically installed via `npm install` inside the `/frontend` folder)
+- next
+- react
+- react-dom
+- tailwindcss
+- lucide-react (if used)
