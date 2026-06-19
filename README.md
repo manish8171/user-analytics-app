@@ -1,55 +1,31 @@
-# CausalFunnel User Analytics Application
+# CausalFunnel - Full-Stack User Analytics Platform
 
-A full-stack application that tracks user interactions on a webpage and displays them in a dashboard. Built as an assignment for the Full Stack Engineer role at CausalFunnel.
+A sleek, premium, and fully-featured User Analytics Platform designed to track, aggregate, and visualize user interactions (page views and clicks) in real-time. Built with a modern dark-mode aesthetic and zero-configuration backend, it provides actionable insights into how users navigate and engage with your web applications.
 
-## Tech Stack
+## 🌟 Key Features
 
-*   **Frontend (Dashboard):** Next.js (App Router), React, Tailwind CSS
-*   **Backend (API):** Node.js, Express.js
-*   **Database:** MongoDB
-*   **Tracking Script:** Vanilla JavaScript
+* **Real-time Interaction Tracking**: A lightweight vanilla JavaScript tracker (`tracking.js`) that captures precise X/Y click coordinates, target element text, and page view timestamps without blocking the main thread.
+* **Sleek Dark Mode Dashboard**: A spectacular Next.js frontend featuring glassmorphism (`backdrop-filter`), glowing neon timelines, ambient gradients, and fluid micro-animations.
+* **Actionable Click Analytics**: Automatically aggregates raw click coordinates into an intuitive "Most Clicked Elements" leaderboard, allowing you to easily identify high-converting UI components.
+* **Complete Session Management**: Track full user journeys across multiple pages. Built-in tools allow administrators to instantly **End**, **Block**, or **Delete** malicious or stale sessions.
+* **Zero-Config Backend**: A robust Node.js/Express backend powered by a highly-efficient In-Memory Array Database. It bypasses complex Linux/OS binary constraints, guaranteeing immediate startup on any machine without requiring a local MongoDB installation.
+* **Automated Startup**: Comes with a resilient `start.sh` script that automatically installs dependencies, handles port management, and launches both the frontend dashboard and demo tracking page in parallel.
 
-## Project Structure
+## 🚀 Getting Started
 
-*   `/backend` - Express server and MongoDB models
-*   `/frontend` - Next.js Dashboard application
-*   `/demo` - HTML page with the tracking script to generate data
+1. Clone this repository.
+2. Ensure you have Node.js installed.
+3. Run the automated startup script:
+   ```bash
+   ./start.sh
+   ```
+4. Click around the **Demo Page** to generate tracking data.
+5. Open the **Dashboard** to view your real-time analytics!
 
-## Setup Steps
+## 🛠 Tech Stack
 
-### Prerequisites
-*   Node.js (v18+)
-*   MongoDB running locally on default port `27017` (or modify `MONGO_URI` in backend code)
-
-### 1. Start the Backend API
-```bash
-cd backend
-npm install
-npm start
-# Server will run on http://localhost:5000
-```
-
-### 2. Start the Frontend Dashboard
-```bash
-cd frontend
-npm install
-npm run dev
-# Dashboard will run on http://localhost:3000
-```
-
-### 3. Generate Analytics Data
-Open `/demo/index.html` in your web browser. 
-Interact with the page by clicking around. The tracking script will send `page_view` and `click` events to the backend.
-
-### 4. View Dashboard
-Navigate to `http://localhost:3000` in your browser.
-*   **Sessions View:** See active sessions and click on them to view the user's event journey.
-*   **Heatmap View:** Select a page to see the absolute click coordinates visually represented.
-
-## Assumptions & Trade-offs
-
-1.  **Session Tracking:** `localStorage` is used to store `session_id`. It persists across tabs and window reloads. An alternative would be `sessionStorage` (lost on tab close) or cookies (better for cross-domain if configured correctly, but `localStorage` is simpler for a demo).
-2.  **Heatmap Visualization:** The heatmap plots dots using absolute X and Y coordinates on a large blank canvas. In a production app, this would overlay over an `iframe` of the target site or a scaled screenshot, and handle responsive design resizing logic (normalizing coordinates to percentages or screen widths).
-3.  **Database Connection:** Assumes a local, unauthenticated MongoDB instance running at `mongodb://127.0.0.1:27017/causalfunnel_analytics`.
-4.  **CORS:** The Express backend uses the `cors` package to allow requests from any origin for ease of local testing with the file `file://` protocol in the demo script.
-5.  **Beacon vs Fetch:** The tracking script attempts to use `navigator.sendBeacon` if available, which is best practice for analytics to ensure data is sent even if the user navigates away. It falls back to `fetch` with `keepalive`.
+* **Frontend Dashboard**: Next.js (App Router), React, Tailwind CSS
+* **Backend API**: Node.js, Express, CORS
+* **Tracking Client**: Vanilla JavaScript (`fetch` with Keepalive logic to bypass CORS constraints)
+* **Database**: Pure JS In-Memory Fallback (Originally Mongoose/MongoDB)
+# user-analytics-app
