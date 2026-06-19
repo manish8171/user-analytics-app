@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CausalFunnel Analytics Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f9fafb;
+      color: #111827;
+    }
+    h1 {
+      color: #2563eb;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      margin-bottom: 2rem;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .box {
+      height: 100px;
+      background: #e5e7eb;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .box:hover {
+      background: #d1d5db;
+    }
+  </style>
+  <script src="tracking.js"></script>
+</head>
+<body>
+  <h1>Analytics Demo Page</h1>
+  
+  <div class="container">
+    <h2>Welcome to the CausalFunnel Analytics Test</h2>
+    <p>This page automatically tracked a <strong>page_view</strong> event when you loaded it.</p>
+    <p>Try clicking around on different elements to generate <strong>click</strong> events. The tracker will capture the X and Y coordinates of your clicks.</p>
+    
+    <button onclick="alert('Button clicked!')">Click Me!</button>
+  </div>
+
+  <div class="container">
+    <h2>Interactive Grid</h2>
+    <p>Click inside these boxes to test spatial tracking for the heatmap.</p>
+    <div class="grid">
+      <div class="box">Box 1</div>
+      <div class="box">Box 2</div>
+      <div class="box">Box 3</div>
+      <div class="box">Box 4</div>
+      <div class="box">Box 5</div>
+      <div class="box">Box 6</div>
+    </div>
+  </div>
+</body>
+</html>
