@@ -29,3 +29,4 @@ A sleek, premium, and fully-featured User Analytics Platform designed to track, 
 * **Tracking Client**: Vanilla JavaScript (`fetch` with Keepalive logic to bypass CORS constraints)
 * **Database**: Pure JS In-Memory Fallback (Originally Mongoose/MongoDB)
 # user-analytics-app
+# user-analytics-app
