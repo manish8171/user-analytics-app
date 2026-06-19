@@ -84,7 +84,7 @@ export default function AnalyticsView() {
     <div className="flex flex-col gap-6">
       <div className="bg-white/5 p-6 rounded-2xl shadow-xl shadow-black/20 border border-white/10 backdrop-blur-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Interaction Analytics</h2>
+          <h2 className="text-xl font-bold text-white">Heatmap Analysis</h2>
           <p className="text-sm text-gray-400">Discover which buttons and elements users click the most.</p>
         </div>
         
@@ -143,6 +143,46 @@ export default function AnalyticsView() {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="bg-white/5 p-6 rounded-2xl shadow-xl shadow-black/20 border border-white/10 backdrop-blur-md">
+        <div className="mb-6 flex justify-between items-center border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-white">Visual Click Map</h3>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <span className="w-3 h-3 rounded-full bg-blue-500 opacity-60 inline-block shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+            Click Position
+          </div>
+        </div>
+        
+        {/* Heatmap Container */}
+        <div className="relative w-full h-[600px] border border-white/10 bg-black/20 rounded-xl overflow-auto custom-scrollbar">
+          {pages.length === 0 ? (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+              No tracking data available. Open the demo page to generate events.
+            </div>
+          ) : clicks.length === 0 ? (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+              No click data available for this page.
+            </div>
+          ) : (
+            <div className="relative" style={{ width: '100%', minHeight: '100%' }}>
+              {clicks.map((click, i) => (
+                <div
+                  key={click._id || i}
+                  className="absolute w-5 h-5 bg-blue-500 rounded-full opacity-60 transform -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(59,130,246,0.9)] animate-pulse"
+                  style={{
+                    left: `${click.click_x}px`,
+                    top: `${click.click_y}px`,
+                  }}
+                  title={`Time: ${new Date(click.timestamp).toLocaleTimeString()} | Element: ${click.element_text || 'Unknown'}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <p className="mt-4 text-xs text-gray-500 text-center">
+          Note: Click coordinates are absolute to the page origin (0,0). Dots represent exact recorded click locations.
+        </p>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ export default function RootLayout({
                       Sessions
                     </Link>
                     <Link href="/heatmap" className="px-4 py-1.5 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">
-                      Analytics
+                      Heatmap
                     </Link>
                   </div>
                 </div>
